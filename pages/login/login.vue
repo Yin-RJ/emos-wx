@@ -23,7 +23,10 @@
 				
 			},
 			toRegister() {
-				
+				// 跳转到注册页面
+				uni.navigateTo({
+					url:"../register/register"
+				})
 			}
 		}
 	}
