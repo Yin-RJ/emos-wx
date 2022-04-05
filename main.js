@@ -1,5 +1,7 @@
 import App from './App'
 
+let baseUrl = "http://192.168.3.2:8080/emos-wx-api"
+
 // #ifndef VUE3
 import Vue from 'vue'
 Vue.config.productionTip = false
@@ -9,6 +11,43 @@ const app = new Vue({
 })
 app.$mount()
 // #endif
+
+Vue.prototype.url = {
+	register: baseUrl + "/user/register",
+	login: baseUrl + "/user/login"
+}
+
+Vue.prototype.ajax = function(url, method, data, fun) {
+	uni.request({
+		"url": url,
+		"method": method,
+		"header": {
+			token: uni.getStorageSync('token')
+		},
+		"data": data,
+		success: function(resp) {
+			if (resp.statusCode == 401) {
+				uni.redirectTo({
+					url: '../login/login'
+				});
+			} else if (resp.statusCode == 200 && resp.data.code == 200) {
+				let data = resp.data
+				if (data.hasOwnProperty("token")) {
+					console.log(resp.data)
+					let token = data.token
+					uni.setStorageSync("token", token)
+				}
+				fun(resp)
+			} else {
+				uni.showToast({
+					icon: 'none',
+					title: resp.data
+				});
+			}
+		}
+	});
+}
+
 
 // #ifdef VUE3
 import { createSSRApp } from 'vue'

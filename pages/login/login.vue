@@ -15,17 +15,40 @@
 	export default {
 		data() {
 			return {
-				
+
 			}
 		},
 		methods: {
 			login() {
-				
+				let that = this;
+				uni.login({
+					provider: "weixin",
+					success: function(resp) {
+						let code = resp.code;
+						that.ajax(that.url.login, "POST", {
+							"code": code
+						}, function(resp) {
+							let permission = resp.data.permission;
+							uni.setStorageSync('permission', permission);
+							//TODO 跳转到登陆页面
+							uni.showToast({
+								title: "登录成功"
+							})
+						})
+					},
+					fail: function(e) {
+						console.log(e)
+						uni.showToast({
+							icon: "none",
+							title: "执行异常"
+						})
+					}
+				})
 			},
 			toRegister() {
 				// 跳转到注册页面
 				uni.navigateTo({
-					url:"../register/register"
+					url: "../register/register"
 				})
 			}
 		}
