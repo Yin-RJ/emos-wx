@@ -30,9 +30,11 @@
 						}, function(resp) {
 							let permission = resp.data.permission;
 							uni.setStorageSync('permission', permission);
-							//TODO 跳转到登陆页面
 							uni.showToast({
 								title: "登录成功"
+							})
+							uni.switchTab({
+								url:"../index/index"
 							})
 						})
 					},

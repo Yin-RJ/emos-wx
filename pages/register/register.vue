@@ -62,6 +62,9 @@
 							let permission = resp.data.permission;
 							uni.setStorageSync('permission', permission);
 							//跳转到index页面
+							uni.switchTab({
+								url:"../index/index"
+							})
 						});
 				
 					},
