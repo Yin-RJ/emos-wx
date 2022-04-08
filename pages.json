@@ -50,7 +50,16 @@
 			}
 
 		}
-	],
+	    ,{
+            "path" : "pages/checkin/checkin",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "EMOS系统",
